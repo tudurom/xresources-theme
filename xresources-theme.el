@@ -1,10 +1,10 @@
 ;;; xresources-theme.el --- Use your .Xresources as your emacs theme
 
-;; Copyright (C) 2014-2014 Marten Lienen <marten.lienen@gmail.com>
+;; Copyright (C) 2014-2017 Marten Lienen <marten.lienen@gmail.com>, Tudor Roman <tudor@tudorr.xyz>
 
-;; Author: Marten Lienen <marten.lienen@gmail.com>
+;; Author: Marten Lienen <marten.lienen@gmail.com>, Tudor Roman <tudor@tudorr.xyz>
 ;; Keywords: xresources, theme
-;; Version: 0.2.0
+;; Version: 0.2.1
 
 ;; This file is not part of GNU Emacs.
 
@@ -24,13 +24,39 @@
 
 ;;; Commentary:
 
-;; Use the colors defined in your .Xresources as your emacs theme
+;; Use the colors defined in your .Xresources as your Emacs theme
 
 ;;; Code:
 
+(defun terminal-color-to-emacs-color (color)
+  "Return the Emacs color name of a given X resource terminal color."
+  (setq-local colormap
+        '(("color0" . "black")
+          ("color1" . "red")
+          ("color2" . "green")
+          ("color3" . "yellow")
+          ("color4" . "blue")
+          ("color5" . "magenta")
+          ("color6" . "cyan")
+          ("color7" . "whyte")
+
+          ("color8" . "brightblack")
+          ("color9" . "brightred")
+          ("color10" . "brightgreen")
+          ("color11" . "brightyellow")
+          ("color12" . "brightblue")
+          ("color13" . "brightmagenta")
+          ("color14" . "brightcyan")
+          ("color15" . "brightwhite")))
+  (cdr (assoc color colormap)))
+
 (defun xresources-theme-color (name)
   "Read the color NAME (e.g. color5) from the X resources."
-  (x-get-resource name ""))
+  (if (display-graphic-p)
+      (replace-regexp-in-string "\n$" ""
+                                (shell-command-to-string
+                                 (concat "xrq '" name "'")))
+    (terminal-color-to-emacs-color name)))
 
 (deftheme xresources "~/.Xresources as a theme")
 
