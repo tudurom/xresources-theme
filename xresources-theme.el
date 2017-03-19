@@ -489,7 +489,17 @@
 
    ;; smartparens
    `(sp-show-pair-mismatch-face ((t (:foreground ,red :background ,background :weight bold))))
-   `(sp-show-pair-match-face ((t (:background ,background :weight bold))))))
+   `(sp-show-pair-match-face ((t (:background ,background :weight bold))))
+
+   ;; terminal
+   `(term-color-black ((t (:foreground ,black))))
+   `(term-color-red ((t (:foreground ,red))))
+   `(term-color-green ((t (:foreground ,green))))
+   `(term-color-yellow ((t (:foreground ,yellow))))
+   `(term-color-blue ((t (:foreground ,blue))))
+   `(term-color-magenta ((t (:foreground ,magenta))))
+   `(term-color-cyan ((t (:foreground ,cyan))))
+   `(term-color-white ((t (:foreground ,white))))))
 
 ;;;###autoload
 (when load-file-name
