@@ -31,34 +31,41 @@
 (defun terminal-color-to-emacs-color (color)
   "Return the Emacs color name of a given X resource terminal color."
   (setq-local colormap
-        '(("color0" . "black")
-          ("color1" . "red")
-          ("color2" . "green")
-          ("color3" . "yellow")
-          ("color4" . "blue")
-          ("color5" . "magenta")
-          ("color6" . "cyan")
-          ("color7" . "whyte")
+              '(("color0" . "black")
+                ("color1" . "red")
+                ("color2" . "green")
+                ("color3" . "yellow")
+                ("color4" . "blue")
+                ("color5" . "magenta")
+                ("color6" . "cyan")
+                ("color7" . "whyte")
 
-          ("color8" . "brightblack")
-          ("color9" . "brightred")
-          ("color10" . "brightgreen")
-          ("color11" . "brightyellow")
-          ("color12" . "brightblue")
-          ("color13" . "brightmagenta")
-          ("color14" . "brightcyan")
-          ("color15" . "brightwhite")))
+                ("color8" . "brightblack")
+                ("color9" . "brightred")
+                ("color10" . "brightgreen")
+                ("color11" . "brightyellow")
+                ("color12" . "brightblue")
+                ("color13" . "brightmagenta")
+                ("color14" . "brightcyan")
+                ("color15" . "brightwhite")))
   (cdr (assoc color colormap)))
+
+(defun get-resource (name)
+  "Get X resource value."
+  (replace-regexp-in-string "\n$" ""
+                            (shell-command-to-string
+                             (concat "xrq '" name "'"))))
 
 (defun xresources-theme-color (name)
   "Read the color NAME (e.g. color5) from the X resources."
   (if (display-graphic-p)
-      (replace-regexp-in-string "\n$" ""
-                                (shell-command-to-string
-                                 (concat "xrq '" name "'")))
+      (get-resource name)
     (terminal-color-to-emacs-color name)))
 
 (deftheme xresources "~/.Xresources as a theme")
+
+(set-face-attribute 'default nil :font (get-resource "Emacs.font"))
+(set-frame-font (get-resource "Emacs.font") nil t)
 
 (let* ((foreground (xresources-theme-color "foreground"))
        (background (xresources-theme-color "background"))
