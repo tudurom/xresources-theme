@@ -135,15 +135,13 @@
    `(menu ((t (:foreground ,foreground :background ,background))))
    `(minibuffer-prompt ((t (:foreground ,yellow))))
    `(mode-line
-     ((t (:foreground ,green
-                      :background ,background
-                      :box (:line-width -1 :style released-button)))
+     ((t (:foreground ,light-gray
+                      :background ,background))
       (t :inverse-video t)))
-   `(mode-line-buffer-id ((t (:foreground ,yellow :weight bold))))
+   `(mode-line-buffer-id ((t (:foreground ,light-gray :weight bold))))
    `(mode-line-inactive
-     ((t (:foreground ,green
-                      :background ,background
-                      :box (:line-width -1 :style released-button)))))
+     ((t (:foreground ,light-gray
+                      :background ,background))))
    `(region ((t (:background ,blue))
              (t :inverse-video t)))
    `(secondary-selection ((t (:background ,background))))
@@ -152,12 +150,12 @@
 
    ;; font lock
    `(font-lock-builtin-face ((t (:foreground ,foreground :weight bold))))
-   `(font-lock-comment-face ((t (:foreground ,green))))
-   `(font-lock-comment-delimiter-face ((t (:foreground ,green))))
+   `(font-lock-comment-face ((t (:foreground ,light-gray))))
+   `(font-lock-comment-delimiter-face ((t (:foreground ,light-gray))))
    `(font-lock-constant-face ((t (:foreground ,green))))
    `(font-lock-doc-face ((t (:foreground ,green))))
    `(font-lock-function-name-face ((t (:foreground ,cyan))))
-   `(font-lock-keyword-face ((t (:foreground ,yellow :weight bold))))
+   `(font-lock-keyword-face ((t (:foreground ,light-blue :weight bold))))
    `(font-lock-negation-char-face ((t (:foreground ,yellow :weight bold))))
    `(font-lock-preprocessor-face ((t (:foreground ,blue))))
    `(font-lock-regexp-grouping-construct ((t (:foreground ,yellow :weight bold))))
@@ -408,7 +406,7 @@
    `(js2-external-variable ((t (:foreground ,red))))
 
    ;; linum-mode
-   `(linum ((t (:foreground ,green :background ,background))))
+   `(linum ((t (:foreground ,light-gray :background ,background))))
 
    ;; magit
    `(magit-item-highlight ((t (:background ,background))))
@@ -549,7 +547,9 @@
    `(circe-fool-face ((t (:foreground ,light-gray))))
    `(circe-highlight-nick-face ((t (:foreground ,yellow :weight bold))))
    `(circe-prompt-face ((t (:foreground ,cyan :weight bold))))
-   `(circe-server-face ((t (:foreground ,blue))))))
+   `(circe-server-face ((t (:foreground ,blue))))
+   `(parinfer-pretty-parens:dim-paren-face
+     ((t (:foreground ,light-gray))))))
 
 ;;;###autoload
 (when load-file-name
