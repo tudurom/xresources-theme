@@ -38,7 +38,7 @@
            ("color4" . "blue")
            ("color5" . "magenta")
            ("color6" . "cyan")
-           ("color7" . "whyte")
+           ("color7" . "white")
 
            ("color8" . "brightblack")
            ("color9" . "brightred")
@@ -62,6 +62,11 @@
       (get-resource name)
     (terminal-color-to-emacs-color name)))
 
+(defun colort (amount color)
+  "Tint color using colort"
+  (shell-command-to-string
+   (concat "colort -l " (number-to-string amount) " '" color "'")))
+
 (deftheme xresources "~/.Xresources as a theme")
 
 (set-face-attribute 'default nil :font (get-resource "Emacs.font"))
@@ -84,7 +89,11 @@
        (light-blue (xresources-theme-color "color12"))
        (light-magenta (xresources-theme-color "color13"))
        (light-cyan (xresources-theme-color "color14"))
-       (white (xresources-theme-color "color15")))
+       (white (xresources-theme-color "color15"))
+
+       (mode-line-darker-bg (colort -2 background))
+       (mode-line-darker-bg-inactive (colort -5 background))
+       (vertical-border-darker (colort -1 black)))
   (custom-theme-set-faces
    'xresources
 
@@ -134,19 +143,20 @@
 
    `(menu ((t (:foreground ,foreground :background ,background))))
    `(minibuffer-prompt ((t (:foreground ,yellow))))
-   `(mode-line
-     ((t (:foreground ,light-gray
-                      :background ,background))
-      (t :inverse-video t)))
-   `(mode-line-buffer-id ((t (:foreground ,light-gray :weight bold))))
    `(mode-line-inactive
      ((t (:foreground ,light-gray
-                      :background ,background))))
+                      :background ,mode-line-darker-bg-inactive
+                      :box (:line-width 10 :color ,mode-line-darker-bg-inactive)))))
+   `(mode-line
+     ((t (:foreground ,light-gray
+                      :background ,mode-line-darker-bg
+                      :box (:line-width 10 :color ,mode-line-darker-bg)))))
+   `(mode-line-buffer-id ((t (:foreground ,light-gray :weight bold))))
    `(region ((t (:background ,blue))
              (t :inverse-video t)))
    `(secondary-selection ((t (:background ,background))))
    `(trailing-whitespace ((t (:background ,red))))
-   `(vertical-border ((t (:foreground ,foreground))))
+   `(vertical-border ((t (:foreground ,vertical-border-darker :background ,vertical-border-darker))))
 
    ;; font lock
    `(font-lock-builtin-face ((t (:foreground ,foreground :weight bold))))
@@ -162,7 +172,7 @@
    `(font-lock-regexp-grouping-backslash ((t (:foreground ,green :weight bold))))
    `(font-lock-string-face ((t (:foreground ,red))))
    `(font-lock-type-face ((t (:foreground ,blue))))
-   `(font-lock-variable-name-face ((t (:foreground ,red))))
+   `(font-lock-variable-name-face ((t (:foreground ,gray))))
    `(font-lock-warning-face ((t (:foreground ,yellow :weight bold))))
    `(c-annotation-face ((t (:inherit font-lock-constant-face))))
 
@@ -549,7 +559,18 @@
    `(circe-prompt-face ((t (:foreground ,cyan :weight bold))))
    `(circe-server-face ((t (:foreground ,blue))))
    `(parinfer-pretty-parens:dim-paren-face
-     ((t (:foreground ,light-gray))))))
+     ((t (:foreground ,light-gray))))
+
+   `(git-gutter-fr:added ((t (:foreground ,green))))
+   `(git-gutter-fr:deleted ((t (:foreground ,red))))
+   `(git-gutter-fr:modified ((t (:foreground ,yellow))))
+   `(git-gutter-fr:unchanged ((t (:foreground ,yellow))))
+
+   `(neo-root-dir-face ((t (:foreground ,green))))
+   `(neo-file-link-face ((t (:foreground ,foreground))))
+   `(neo-dir-link-face ((t (:foreground ,blue))))
+   `(neo-expand-btn-face ((t (:foreground ,blue))))
+   `(neo-header-face ((t (:foreground ,foreground))))))
 
 ;;;###autoload
 (when load-file-name
