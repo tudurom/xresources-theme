@@ -7,7 +7,7 @@ easily keep your emacs theme in sync with your xterm and other X applications.
 
 I made some changes to the original theme. Instead of getting the colors from the X resource database using `(x-get-resource)`, this fork uses `xrq` to be able to just reload the theme with `(load-theme)` if you change your color scheme, no need to restart emacs. Also, it uses terminal colors instead of HEX colors, so it works when no window system is used.
 
-Depends on [xrq](https://github.com/arianon/xrq/).
+Depends on [xrq](https://github.com/arianon/xrq/) and [colort](https://github.com/neeasade/colort).
 
 ## In Action
 
